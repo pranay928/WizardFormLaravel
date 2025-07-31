@@ -13,9 +13,7 @@ class WizardForm extends Model
     protected $fillable =[
         'fname',
         'lname',
-        'dd',
-        'mm',
-        'yyyy',
+        'birth',
         'email',
         'password',
     ];

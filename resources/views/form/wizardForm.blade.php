@@ -11,50 +11,56 @@
         .tab {
             display: none;
         }
+
+        .form {
+
+            width: 50%;
+            padding: 25px;
+            background-color: goldenrod;
+            margin-left: 25%;
+            margin-top: 10%;
+        }
     </style>
 </head>
 
 <body>
 
-    <form id="wizard" action="{{ route('submit') }}" method="post">
-        @csrf
-        <!-- Step 1 -->
-        <div class="tab">
-            <label for="fname">First name</label>
-            <input type="text" id="fname" name="fname" required>
-            <label for="lname">Last name</label>
-            <input type="text" id="lname" name="lname">
-            <p></p>
-        </div>
+    <div class="form">
+        <form id="wizard" action="{{ route('submit') }}" method="post">
+            @csrf
 
-        <!-- Step 2 -->
-        <div class="tab">
-            <label for="dd">Day</label>
-            <input type="text" id="dd" name="dd">
-            <label for="mm">Month</label>
-            <input type="text" id="mm" name="mm">
-            <label for="yyyy">Year</label>
-            <input type="text" id="yyyy" name="yyyy">
-            <p></p>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="tab">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email">
-            <label for="password">Password</label>
-            <input type="text" id="password" name="password">
-            <p></p>
-        </div>
-
-        <!-- Buttons -->
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            <div class="tab">
+                <label for="fname">First name</label><br>
+                <input type="text" id="fname" name="fname" required><br>
+                <label for="lname">Last name</label><br>
+                <input type="text" id="lname" name="lname"><br>
+                <p></p>
             </div>
-        </div>
-    </form>
+
+            <div class="tab">
+                <label for="birthday">Birthday</label><br>
+                <input type="date" name="birth" id="birthday">
+                <p></p>
+            </div>
+
+
+            <div class="tab">
+                <label for="email">Email</label><br>
+                <input type="text" id="email" name="email"><br>
+                <label for="password">Password</label><br>
+                <input type="text" id="password" name="password"><br>
+                <p></p>
+            </div>
+
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <script>
         let currentTab = 0;
@@ -98,15 +104,16 @@
                     break;
                 }
 
-                // Name validation (only letters)
+                // Name validation only letters
                 if ((name === "fname" || name === "lname") && !/^[A-Za-z]+$/.test(value)) {
                     valid = false;
                     errorMsg = "Name must contain only letters.";
                     break;
                 }
 
-                // Date fields (only numbers)
+                // Date fields only numbers
                 if ((name === "dd" || name === "mm" || name === "yyyy") && !/^[0-9]+$/.test(value)) {
+
                     valid = false;
                     errorMsg = "Date fields must contain only numbers.";
                     break;
@@ -119,7 +126,7 @@
                     break;
                 }
 
-                // Password (optional: min length)
+                // Password
                 if (name === "password" && value.length < 6) {
                     valid = false;
                     errorMsg = "Password must be at least 6 characters.";
@@ -133,6 +140,8 @@
 
 
         function submitForm() {
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
